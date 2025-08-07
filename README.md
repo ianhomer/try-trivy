@@ -2,6 +2,8 @@
 
 Try [Trivy](https://trivy.dev/latest/getting-started/)
 
+Report from this repository published to <https://ianhomer.github.io/try-trivy/> with [GitHub pages](https://docs.github.com/en/pages)
+
 ## Developer Setup
 
 1. Install pre-commit:
