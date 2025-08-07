@@ -3,6 +3,15 @@ name: CI
 on:
   push:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   lint-and-scan:
     runs-on: ubuntu-latest
@@ -16,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install npm dependencies
         run: cd hello-react && npm install
@@ -33,7 +42,6 @@ jobs:
           scan-type: "fs"
           scan-ref: "."
           format: "table"
-          exit-code: "1"
 
       - name: Run Trivy license scanner
         uses: aquasecurity/trivy-action@0.32.0
@@ -48,4 +56,28 @@ jobs:
         with:
           image-ref: "hello-world"
           format: "table"
-          exit-code: "1"
+
+      - name: Install scan2html plugin
+        run: trivy plugin install scan2html
+
+      - name: Generate HTML report
+        run: make report
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out/
+
+  deploy:
+    needs: lint-and-scan
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -49,21 +49,17 @@ trivy plugin install scan2html
 
 ### Usage Examples
 
-1. **Scan local filesystem and generate HTML report:**
-   ```bash
-   trivy scan2html fs --scanners vuln,secret,misconfig . --scan2html-flags --output interactive_report.html
-   ```
+```bash
+# First create JSON output from Trivy
+trivy fs --format json --output out/report.json .
 
-2. **Generate report from existing JSON scan results:**
-   ```bash
-   # First create JSON output from Trivy
-   trivy fs --format json --output vulnerabilities.json .
-   
-   # Then generate HTML report
-   trivy scan2html generate --scan2html-flags --output interactive_report.html --from vulnerabilities.json
-   ```
+# Then generate HTML report
+trivy scan2html generate --scan2html-flags --output out/report.html \
+  --from out/report.json
+```
 
 ### Features
+
 - Interactive HTML reports for vulnerabilities, misconfigurations, secrets, and SBOM
 - EPSS (Exploit Prediction Scoring System) score integration
 - 100% open-source with no API keys or rate limits
@@ -78,6 +74,7 @@ trivy plugin install scan2html
 DefectDojo orchestrates end-to-end security testing, vulnerability tracking, deduplication, remediation, and reporting. It's an OWASP Flagship project designed for security teams managing vulnerabilities across multiple applications and environments.
 
 ### Key Features
+
 - **Vulnerability Management**: Centralized tracking and remediation of security findings
 - **Tool Integration**: Import scan results from multiple security tools including Trivy
 - **Deduplication**: Automatically identifies and merges duplicate vulnerabilities
@@ -98,6 +95,7 @@ docker-compose up -d
 ### Integrating Trivy with DefectDojo
 
 1. **Export Trivy results in JSON format:**
+
    ```bash
    trivy fs --format json --output trivy-results.json .
    ```
@@ -107,6 +105,7 @@ docker-compose up -d
 3. **Set up automated pipelines** to regularly import Trivy scan results for continuous monitoring
 
 ### Benefits for Security Teams
+
 - Centralized vulnerability management across all applications
 - Historical tracking of security posture improvements
 - Integration with ticketing systems (Jira, etc.)
