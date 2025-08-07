@@ -1,10 +1,13 @@
-.PHONY: build scan-image run lint
+.PHONY: build scan-image scan-fs run lint
 
 build:
 	docker build -t hello-world ./hello-world
 
 scan-image: build
 	trivy image hello-world
+
+scan-fs:
+	trivy fs .
 
 run:
 	docker run --rm hello-world
