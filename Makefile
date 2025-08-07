@@ -21,9 +21,12 @@ scan-fs-json: out
 scan-repo:
 	trivy repo .
 
+scan2html-install:
+	trivy plugin install scan2html
+	
 report: scan-image-json scan-fs-json
 	rm -f out/report.html
-	trivy scan2html generate --scan2html-flags --output out/report.html \
+	trivy scan2html generate --scan2html-flags --output out/index.html \
 		--from out/fs-report.json,out/image-report.json
 
 scan-licenses:
