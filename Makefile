@@ -10,32 +10,32 @@ scan-image: build
 	trivy image hello-world
 
 scan-image-json: build out
-	trivy image hello-world --format json --output out/image-report.json
+	trivy image hello-world --scanners vuln,misconfig,license --format json --output out/image-report.json
 
 scan-fs:
 	trivy fs .
 
 scan-fs-json: out
-	trivy fs --format json --output out/fs-report.json .
+	trivy fs --scanners misconfig,license --format json --output out/fs-report.json .
 
 scan-repo:
 	trivy repo .
-	
+
+scan-repo-json: out
+	trivy repo --scanners misconfig,license --format json --output out/repo-report.json .
+
 scan-license:
 	trivy fs --scanners license .
-
-scan-license-json: out
-	trivy fs --scanners license --format json --output out/license-report.json .
 
 scan: scan-image scan-fs scan-licenses
 
 scan2html-install:
 	trivy plugin install scan2html
 
-report: scan-image-json scan-fs-json scan-license-json
+report: scan-image-json scan-fs-json
 	rm -f out/index.html
 	trivy scan2html generate --scan2html-flags --output out/index.html \
-		--from out/fs-report.json,out/image-report.json,out/license-report.json
+		--from out/fs-report.json,out/image-report.json
 
 sbom-image: build
 	mkdir -p out
