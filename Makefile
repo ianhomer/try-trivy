@@ -1,4 +1,4 @@
-.PHONY: build scan scan-image scan-fs scan-repo sbom sbom-image sbom-fs npm-audit run lint
+.PHONY: build scan scan-image scan-fs scan-repo scan-licenses sbom sbom-image sbom-fs npm-audit run lint
 
 build:
 	docker build -t hello-world ./hello-world
@@ -11,6 +11,9 @@ scan-fs:
 
 scan-repo:
 	trivy repo .
+
+scan-licenses:
+	trivy fs --scanners license .
 
 scan: scan-image scan-fs
 
