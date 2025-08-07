@@ -3,7 +3,7 @@
 build:
 	docker build -t hello-world ./hello-world
 
-scan-image:
+scan-image: build
 	trivy image hello-world
 
 run:
