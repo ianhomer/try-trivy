@@ -10,13 +10,13 @@ scan-image: build
 	trivy image hello-world
 
 scan-image-json: build out
-	trivy image hello-world --scanners vuln,misconfig,license --format json --output out/image-report.json
+	trivy image hello-world --scanners secret,vuln,misconfig,license --format json --output out/image-report.json
 
 scan-fs:
 	trivy fs .
 
 scan-fs-json: out
-	trivy fs --scanners vuln,misconfig,license --format json --output out/fs-report.json .
+	trivy fs --scanners secret,vuln,misconfig,license --format json --output out/fs-report.json .
 
 scan-repo:
 	trivy repo .
