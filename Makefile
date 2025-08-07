@@ -16,7 +16,7 @@ scan-fs:
 	trivy fs .
 
 scan-fs-json: out
-	trivy fs --scanners misconfig,license --format json --output out/fs-report.json .
+	trivy fs --scanners vuln,misconfig,license --format json --output out/fs-report.json .
 
 scan-repo:
 	trivy repo .
