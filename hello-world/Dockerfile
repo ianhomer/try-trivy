@@ -4,7 +4,8 @@
 FROM alpine:3.22.1
 
 # Mock secret to test scanning
-# Uncomment to see trivy catch secret key
-# RUN echo "AWS_ACCESS_KEY_ID=AKIA0123456789ABCDEF" > ./bad-secret.txt
+# Add an "A" before K in AWS_ACCESS_KEY to see trivy catch secret in project scan
+# Uncomment to see trivy catch secret key in image scan
+# RUN echo "XXX_ACCES_KEY_ID=KIA0123456789ABCDEF" > ./bad-secret.txt
 
 CMD ["echo", "Hello, World!"]
