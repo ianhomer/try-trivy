@@ -3,26 +3,29 @@
 build:
 	docker build -t hello-world ./hello-world
 
-out:
+out-directory:
 	mkdir out
+
+report-directory:
+	mkdir -p out/report
 
 scan-image: build
 	trivy image hello-world
 
-scan-image-json: build out
-	trivy image hello-world --scanners secret,vuln,misconfig,license --format json --output out/image-report.json
+scan-image-json: build report-directory
+	trivy image hello-world --scanners secret,vuln,misconfig,license --format json --output out/report/image-report.json
 
 scan-fs:
 	trivy fs .
 
-scan-fs-json: out
-	trivy fs --scanners secret,vuln,misconfig,license --format json --output out/fs-report.json .
+scan-fs-json: report-directory
+	trivy fs --scanners secret,vuln,misconfig,license --format json --output out/report/fs-report.json .
 
 scan-repo:
 	trivy repo .
 
-scan-repo-json: out
-	trivy repo --scanners misconfig,license --format json --output out/repo-report.json .
+scan-repo-json: report-directory
+	trivy repo --scanners misconfig,license --format json --output out/reportrepo-report.json .
 
 scan-license:
 	trivy fs --scanners license .
@@ -34,11 +37,10 @@ scan2html-install:
 
 report: scan-image-json scan-fs-json
 	rm -f out/index.html
-	trivy scan2html generate --scan2html-flags --output out/index.html \
-		--from out/fs-report.json,out/image-report.json
+	trivy scan2html generate --scan2html-flags --output out/report/index.html \
+		--from out/report/fs-report.json,out/report/image-report.json
 
-sbom-image: build
-	mkdir -p out
+sbom-image: build out-directory
 	trivy image --format spdx-json --output out/sbom-image.json hello-world
 
 sbom-fs:

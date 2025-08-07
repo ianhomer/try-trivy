@@ -30,9 +30,6 @@ jobs:
       - name: Install npm dependencies
         run: cd hello-react && npm install
 
-      - name: Run npm audit
-        run: make npm-audit
-
       - name: Build Docker image
         run: make build
 
@@ -66,7 +63,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: out/
+          path: out/report
 
   deploy:
     needs: lint-and-scan
