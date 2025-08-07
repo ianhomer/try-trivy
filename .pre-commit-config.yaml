@@ -14,7 +14,12 @@ repos:
     rev: v2.12.0
     hooks:
       - id: hadolint
-        args: ['--ignore', 'DL3008']
+        args: ["--ignore", "DL3008"]
+
+  - repo: https://github.com/adaptivekind/pre-commit-hooks
+    rev: v0.0.3
+    hooks:
+      - id: check-untracked-files
 
   - repo: local
     hooks:
@@ -31,3 +36,4 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+

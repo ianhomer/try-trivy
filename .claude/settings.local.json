@@ -3,7 +3,13 @@
     "allow": [
       "Bash(mkdir:*)",
       "WebFetch(domain:github.com)",
-      "Bash(make lint:*)"
+      "Bash(make lint:*)",
+      "mcp__github__get_me",
+      "mcp__github__list_workflows",
+      "mcp__github__list_workflow_runs",
+      "mcp__github__get_job_logs",
+      "mcp__github__list_workflow_jobs",
+      "Bash(make:*)"
     ],
     "deny": []
   }
