@@ -3,23 +3,26 @@
 build:
 	docker build -t hello-world ./hello-world
 
+out:
+	mkdir out
+
 scan-image: build
 	trivy image hello-world
 
-scan-image-json: build
+scan-image-json: build out
 	trivy image hello-world --format json --output out/image-report.json
 
 scan-fs:
 	trivy fs .
 
-scan-fs-json:
+scan-fs-json: out
 	trivy fs --format json --output out/fs-report.json .
 
 scan-repo:
 	trivy repo .
 
 report: scan-image-json scan-fs-json
-	rm out/report.html
+	rm -f out/report.html
 	trivy scan2html generate --scan2html-flags --output out/report.html \
 		--from out/fs-report.json,out/image-report.json
 
