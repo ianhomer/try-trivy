@@ -1,4 +1,6 @@
-FROM alpine:3.20
+# See https://hub.docker.com/_/alpine/tags
+# 3.21.2 has critical - CVE-2025-26519
+FROM alpine:3.21.2
 
 # Mock secret to test scanning
 # Uncomment to see trivy catch secret key
