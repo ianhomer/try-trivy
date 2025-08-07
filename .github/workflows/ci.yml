@@ -21,3 +21,4 @@ jobs:
         with:
           image-ref: "hello-world"
           format: "table"
+          exit-code: "1"
