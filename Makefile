@@ -1,4 +1,4 @@
-.PHONY: build scan scan-image scan-fs sbom sbom-image sbom-fs run lint
+.PHONY: build scan scan-image scan-fs scan-repo sbom sbom-image sbom-fs run lint
 
 build:
 	docker build -t hello-world ./hello-world
@@ -8,6 +8,9 @@ scan-image: build
 
 scan-fs:
 	trivy fs .
+
+scan-repo:
+	trivy repo .
 
 scan: scan-image scan-fs
 
