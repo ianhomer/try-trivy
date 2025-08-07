@@ -1,4 +1,4 @@
-.PHONY: build scan scan-image scan-fs scan-repo sbom sbom-image sbom-fs run lint
+.PHONY: build scan scan-image scan-fs scan-repo sbom sbom-image sbom-fs npm-audit run lint
 
 build:
 	docker build -t hello-world ./hello-world
@@ -26,6 +26,9 @@ sbom: sbom-image sbom-fs
 
 run:
 	docker run --rm hello-world
+
+npm-audit:
+	cd hello-react && npm audit --audit-level=high
 
 lint:
 	docker run --rm -i hadolint/hadolint < hello-world/Dockerfile
