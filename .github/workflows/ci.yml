@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  lint-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Dockerfile lint
+        run: make lint
+
+      - name: Build Docker image
+        run: make build
+
+      - name: Run Trivy vulnerability scanner
+        run: make scan-image
+
